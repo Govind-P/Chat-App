@@ -16,5 +16,9 @@ export const backendApi={
     userData: {
         url:`${backendApiUrl}/user-data`,
         method:'GET'
+    },
+    users:{
+        url:`${backendApiUrl}/users`,
+        method:'GET'
     }
 }

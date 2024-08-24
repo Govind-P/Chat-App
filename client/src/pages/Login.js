@@ -35,6 +35,7 @@ const Login = () => {
     if(user.success){
       navigate('/dashboard');
       toast.success('Welcome '+user.user.name);
+      localStorage.setItem('token', user.data);
       fetchUserData();
     }
     else{

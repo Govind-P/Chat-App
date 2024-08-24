@@ -5,6 +5,7 @@ import Home from "../pages/Home.js";
 import Login from "../pages/Login.js";
 import Signup from "../pages/Signup.js";
 import Dashboard from "../pages/Dashboard.js";
+import Message from "../components/Message.js";
 
 
 
@@ -15,20 +16,27 @@ const router = createBrowserRouter([
         children:[
             {
                 path: "",
-                element:<Home/>
+                element:<Home/>,
+                children:[
+                    {
+                        path: "login",
+                        element:<Login/>
+                    },
+                    {
+                        path: "signup",
+                        element:<Signup/>
+                    },
+                ]
             },
-            {
-                path: "login",
-                element:<Login/>
-            },
-            {
-                path: "signup",
-                element:<Signup/>
-            },
+            
             {
                 path: "dashboard",
                 element:<Dashboard/>
-            },      
+            }, 
+            {
+                path:"dashboard/:id",
+                element:<Dashboard/>
+            }     
         ]
     }
 ]);

@@ -22,10 +22,10 @@ const UserUpdate = ({onClose,data}) => {
               <div className='relative flex justify-end items-end  '>
                 {
                     user && (<div>
-                        <Avatar imageUrl={user.profileImage} userId={user?._id} hi={32} wi={32} show={true}></Avatar>
+                        <Avatar imageUrl={user.profileImage} userId={user?._id} hi={36} wi={36} show={true}></Avatar>
                     </div>)
                 }
-                <div className='absolute bottom-0 right-0 h-8 w-8'>
+                <div className='absolute bottom-1 right-1 h-8 w-8'>
                 <label htmlFor='uploadImageInput'>
                   <div className='cursor-pointer h-full w-full rounded-full bg-black p-1 opacity-50'>
                     <IoMdCamera className='text-2xl text-white'/>

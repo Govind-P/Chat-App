@@ -2,14 +2,30 @@ import React,{useState} from 'react';
 import { IoMdCloseCircle } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
 import SearchCard from './SearchCard';
+import { backendApi } from '../common/api';
 
 const AddPerson = ({onClose}) => {
     const [search, setSearch] = useState('');
-    const [person,setPerson] = useState([1,2]);
+    const [person,setPerson] = useState([]);
     const [loading, setLoading] = useState(false);
     const set=new Array(4).fill(null);
-    const handleChange = (e) => {
+    const handleChange = async(e) => {
+        e.preventDefault();
+        setLoading(true);
         setSearch(e.target.value);
+        const res=await fetch(backendApi.users.url+`?search=${search}`,{
+            method: backendApi.users.method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        })
+        const response=await res.json();
+        if(response.success){
+            setPerson(response.data);
+            setLoading(false);
+        }
+
         
     }
   return (
@@ -18,13 +34,14 @@ const AddPerson = ({onClose}) => {
             <div className='w-full h-26 flex justify-end p-3 items-start gap-2'>
                 <IoMdCloseCircle className='text-5xl  text-slate-100 cursor-pointer' onClick={onClose} />
             </div>
-            <div className=' md:w-[40%]'>
+            <div className=' md:w-[40%] w-full'>
                 <div className='px-2 py-1 h-14 w-full  flex justify-between items-center bg-gray-300 opacity-80  border-2 border-gray-300 focus:outline-none rounded-lg '>
                     <div className='px-2 py-1 w-full'>
-                        <input type='text' className='py-2 px-3 w-full text-slate-800 bg-inherit placeholder:text-slate-800 focus:outline-none '
+                        <input type='text' className='py-2 px-3 w-full text-slate-800 bg-inherit placeholder:text-slate-800 focus focus:outline-none '
                         name="search"
                         value={search}
                         onChange={handleChange}
+                        on
                         placeholder='Search'/>
                     </div>
                     <div className='px-2'>
@@ -32,7 +49,7 @@ const AddPerson = ({onClose}) => {
                     </div>
                 </div>
             </div>
-            <div className='flex-1 md:w-[40%] py-3 '>
+            <div className='flex-1 md:w-[40%] py-3 w-full '>
                 {
                     loading &&(
                         <div className='p-5 pt-7 text-center w-full h-fit flex justify-center items-start rounded-md bg-slate-100'>
@@ -55,7 +72,7 @@ const AddPerson = ({onClose}) => {
                         <div className='p-2 text-center w-full h-fit flex-col  justify-center rounded-lg items-start bg-white'>
                             {
                                 person.map((data, index) => (
-                                    <SearchCard key={index} person={data}/>
+                                    <SearchCard key={index} data={data} onClose={onClose} />
                                 ))
                             }
                         </div>
@@ -63,9 +80,9 @@ const AddPerson = ({onClose}) => {
 
                 }
                 {
-                    !loading && person.length==0 && search.length>0 && (
-                        <div className='p-2 text-center w-full h-fit flex justify-center items-start rounded-md bg-slate-100'>
-                            <p className='font-semibold'>Sorry no user Found...</p>
+                    !loading && person.length===0 && search.length>0 && (
+                        <div className='p-5 text-center w-full h-fit flex justify-center items-start rounded-md bg-slate-100'>
+                            <p className='font-semibold text-md'>Sorry no user Found...</p>
                         </div>
                     )
 

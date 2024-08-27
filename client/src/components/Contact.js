@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ContactCard from './ContactCard';
+import { MdArrowBack } from "react-icons/md";
 
-const Contact = () => {
-    const [search, setSearch] = React.useState('');
+const Contact = ({allUser}) => {
+    const [search, setSearch] = useState('');
     const handleChange = (e) => {
         setSearch(e.target.value);
     }
-    const card=new Array(10).fill(null);
+    const [receiver,setReceiver]=useState([]);
   return (
     <div className='min-h-full px-2 py-1 container mx-auto flex flex-col'>
         <div className='px-2 py-1 h-16 w-full  flex justify-start items-center '>
@@ -19,12 +20,18 @@ const Contact = () => {
             </div>
         </div>
         <div className='flex-1 px-1 w-full'>
-            <div className='px-1 py-1 flex flex-col gap-0 w-full'>
-            {card.map((data,index)=>(
+            <div className='px-1 py-1 flex flex-col gap-0 w-full '>
+            {allUser.length>0 ? 
+            (allUser.map((user,index)=>(
                 <div key={index} className='px-1 py-1 w-full '>
-                    <ContactCard />
+                    <ContactCard user={user}/>
                 </div>
-            ))}
+            ))):
+            (<div className='pt-4 p-3 flex flex-col jusify-center items-center opacity-70'>
+                <MdArrowBack size={30} className='text-slate-400'/>
+                <p className='text-center text-lg text-slate-300'>No Contacts Found</p>
+                <p className='text-center text-lg text-slate-300'>Add people to chat</p>
+            </div>)}
             </div>
         </div>
         

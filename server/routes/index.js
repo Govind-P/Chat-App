@@ -5,6 +5,7 @@ import { Logout } from '../controller/logout.js';
 import { authSender, authToken } from '../middleware/auth.js';
 import { userData } from '../controller/userData.js';
 import { usersDetails } from '../controller/usersDetails.js';
+import {SearchUser } from '../controller/searchUser.js';
 
 const router=express.Router();
 
@@ -13,5 +14,6 @@ router.post('/login',Login);
 router.get('/user-data',authToken,userData)
 router.get('/logout',authToken,Logout);
 router.get('/users/:id',authSender,usersDetails)
+router.get('/users',authSender,SearchUser)
 
 export default router;

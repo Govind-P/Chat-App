@@ -44,13 +44,11 @@ const Login = () => {
   }
 
   useEffect(()=>{
+    window.scrollTo(0, 0);
     if(user){
-      navigate('/dashboard');
+      navigate('/dashboard',{replace:true});
     }
   },[user]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
 
   return (

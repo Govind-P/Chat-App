@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { useDispatch } from 'react-redux';
@@ -12,16 +12,17 @@ import { RiMessage2Fill } from "react-icons/ri";
 import { IoMdPersonAdd } from "react-icons/io";
 import AddPerson from './AddPerson';
 import UserUpdate from './UserUpdate';
-import { IoMdCloseCircle } from "react-icons/io";
 import Avatar from './Avatar';
 
 const  Sidebar= () => {
     const navigate=useNavigate();
+    const user=useSelector(state=>state.user.user);
+
   const dispatch=useDispatch();
-  const user=useSelector(state=>state.user.user);
   const [messageSelected, setMessageSelected] = useState(true);
   const [addUserSelected, setAddUserSelected] = useState(false);
   const [accountSelected, setAccountSelected] = useState(false);
+  
 
   const addPerson=()=>{
     setMessageSelected(false);
@@ -49,6 +50,9 @@ const  Sidebar= () => {
       toast.error(data.message);
     }
   }
+
+  
+
   return (
     <div className='h-screen min-w-14 bg-gray-700'>
         <div className='py-2 p-1 flex w-full min-h-screen flex-col justify-between items-center gap-3'>
@@ -70,7 +74,7 @@ const  Sidebar= () => {
             </div>
             <div className='flex-1'>
             </div>
-            <div className=' h-full w-full flex justify-between items-center  py-2 cursor-pointer' onClick={userAccount}>
+            <div className=' h-full w-full flex justify-between items-center px-1 py-2 cursor-pointer' onClick={userAccount}>
                 {
                     accountSelected && (
                         <div className='h-6 w-1 rounded-full bg-blue-500'/>
@@ -78,7 +82,7 @@ const  Sidebar= () => {
                 }
                 {
                     user && (<div>
-                        <Avatar imageUrl={user.profileImage} userId={user?._id} hi={10} wi={10}></Avatar>    
+                        <Avatar imageUrl={user.profileImage} userId={user?._id} hi={8} wi={8}></Avatar>    
                     </div>)
                 }   
             </div>
